@@ -17,16 +17,15 @@ class App extends Component {
   }
 
   render() {
+
+    let showDiv = this.state.show ?
+      <h1>Hello World</h1> : null;
+
     return (
       <div className="App">
         <button onClick = {this.toggleEvent}>Show!</button>
         
-        {
-          this.state.show ?
-        
-        <h1>Hello World</h1> : null
-
-        }
+        {showDiv}
 
       </div>
     );
