@@ -1,17 +1,17 @@
 import React from "react";
 
-const styles = {
-    display: inline-block;
-    padding: 16px;
-    text-align: center;
-    margin: 16px;
-    border: 1px solid black;
+const divStyle = {
+    display: "inline-block",
+    padding: "16px",
+    textAlign: "center",
+    margin: "16px",
+    border: "1px solid black"
 }   
 
 const Char = (props) => (
     
-    <div style = {styles}>
-        <p>{props.letter}</p>
+    <div style = {divStyle} onClick = {props.click}>
+        <p>{props.letters}</p>
     </div>
 )
 

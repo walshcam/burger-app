@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Input from "./components/input"
-import Validation from "./components/ValidationComponent"
+import Input from "./components/input";
+import Validation from "./components/ValidationComponent";
+import Char from "./components/CharComponent";
 
 class App extends Component {
 
   state = {
     inputValue : "",
     inputLength: 0,
+    inputArray: [],
     validateLength: "This is too short"
   }
 
+  //Responds to when letters are input into field
   stringChange = (event) => {
-    let targetLength = event.target.value.length;
+    //Manipulates the length
+    const targetLength = event.target.value.length;
 
+    //Adds letter the array for cards
+    const targetArray = event.target.value.split("");
+
+    //Changes the validation based on the string length
     const validateLength = this.state.inputLength < 6 ? 
     "This is too short" :
     "String Length Looks Good Bro!";
@@ -23,7 +31,24 @@ class App extends Component {
     this.setState({
       inputValue: event.target.value,
       inputLength: targetLength,
+      inputArray: targetArray,
       validateLength: validateLength
+    })
+  }
+
+  //Deletes the letter when the letter is pushed
+  deleteLetter = (index) => {
+    //Removes the letter from the array - spread operator is used to return a copy of the array
+    const targetArray = [...this.state.inputArray]
+    targetArray.splice(index, 1);
+
+    //Creates a new string for the input
+    const targetValue = targetArray.join('')
+
+    this.setState({
+      inputValue: targetValue,
+      inputLength: this.state.inputLength - 1,
+      inputArray: targetArray
     })
   }
 
@@ -38,6 +63,13 @@ class App extends Component {
         <Validation 
           validate = {this.state.validateLength}
         />
+        {/* This .map() should include a key, but there is no database so the key was excluded. */}
+        {this.state.inputArray.map((letter, index) => (
+          <Char 
+            letters = {letter}
+            click = {this.deleteLetter.bind(this, index)}
+          />
+        ))}
 
         <ol>
           <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g. in a paragraph).</li>
